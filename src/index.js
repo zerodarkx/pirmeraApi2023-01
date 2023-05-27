@@ -1,5 +1,17 @@
 const express = require('express');
 
+
+// const basedatos = require('./config/basedatos');
+
+// const conexionprueba = async () => {
+//     const db = await basedatos();
+//     const sql = 'SELECT * FROM usuario';
+//     const [row] = await db.query(sql);
+//     console.log(row);
+// }
+
+// conexionprueba();
+
 const app = express();
 
 //configuracion
