@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 
 
@@ -22,10 +24,12 @@ app.use(express.urlencoded({ extended: false }))
 //llamar a las rutas
 const indexRoutes = require('./routes/index.routes');
 const usuarioRoutes = require('./routes/usuario.routes');
+const loginRoutes = require('./routes/login.routes');
 
 app.use('', indexRoutes);
 app.use('/usuario', usuarioRoutes);
+app.use('/auth', loginRoutes);
 
-app.listen(4000, () => {
+app.listen(process.env.PORT, () => {
     console.log("servidor iniciado");
 });

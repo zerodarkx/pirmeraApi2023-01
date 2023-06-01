@@ -1,4 +1,5 @@
 const database = require('./../config/basedatos');
+const { encriptar } = require('./../utils/password');
 
 const obtenerTodo = async (req, res) => {
 
@@ -32,7 +33,7 @@ const obtenerUnoSolo = async (req, res) => {
 
 const agregarUsuario = async (req, res) => {
     // console.log(req.body);
-    const { nombre, apellido } = req.body;
+    const { nombre, apellido, password, user, activo } = req.body;
 
     if (nombre === '') {
         return res.status(403).json({
@@ -53,15 +54,17 @@ const agregarUsuario = async (req, res) => {
         });
     }*/
 
+    const passwordhash = encriptar(password);
+
     const db = await database();
-    const sql = `INSERT INTO usuario(nombre, apellido)
-                VALUES('${nombre}', '${apellido}')`;
+    const sql = `INSERT INTO usuario(nombre, apellido, user, password, activo)
+                VALUES('${nombre}', '${apellido}', '${user}', '${passwordhash}', ${activo})`;
     const [result] = await db.query(sql);
 
     if (result.insertId) {
         return res.json({
             "msj": "Usuario Agregado Correctamente",
-            // "usuario": usuario
+            "usuario": result
         });
     }
 

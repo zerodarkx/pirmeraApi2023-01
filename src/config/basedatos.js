@@ -1,11 +1,10 @@
 const mysql = require('mysql2/promise')
-// const { configDatabase } = require("./config");
 
 const configDatabase = {
-    host     : 'localhost',
-    user     : 'root',
-    password : 'root',
-    database : 'prueba'
+    host     : process.env.HOST,
+    user     : process.env.USER,
+    password : process.env.PASSWORD,
+    database : process.env.DATABASE
 }
 
 const connection = async () => {
