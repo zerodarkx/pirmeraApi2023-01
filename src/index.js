@@ -25,10 +25,21 @@ app.use(express.urlencoded({ extended: false }))
 const indexRoutes = require('./routes/index.routes');
 const usuarioRoutes = require('./routes/usuario.routes');
 const loginRoutes = require('./routes/login.routes');
+const tareaRoutes = require('./routes/tarea.routes');
 
 app.use('', indexRoutes);
 app.use('/usuario', usuarioRoutes);
 app.use('/auth', loginRoutes);
+app.use('/tarea', tareaRoutes);
+
+app.all('*', (req, res) => {
+    res.json(
+        {
+            "ok": false,
+            "msj": "no exito"
+        }
+    );
+})
 
 app.listen(process.env.PORT, () => {
     console.log("servidor iniciado");

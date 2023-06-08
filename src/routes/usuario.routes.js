@@ -3,19 +3,20 @@ const { Router } = require('express');
 const { agregarUsuario,
     editarUsuario,
     eliminarUsuario,
-    obtenerTodo, 
+    obtenerTodo,
     obtenerUnoSolo } = require('./../controllers/usuario.controller');
+const { tengoToken } = require('./../middlewares/auth');
 
 const router = Router();
 
-router.get('/', obtenerTodo);
+router.get('/', tengoToken, obtenerTodo);
 
-router.get('/:id', obtenerUnoSolo);
+router.get('/:id', tengoToken, obtenerUnoSolo);
 
-router.post('/', agregarUsuario);
+router.post('/', tengoToken, agregarUsuario);
 
-router.put('/:id', editarUsuario);
+router.put('/:id', tengoToken, editarUsuario);
 
-router.delete('/:id', eliminarUsuario);
+router.delete('/:id', tengoToken, eliminarUsuario);
 
 module.exports = router;

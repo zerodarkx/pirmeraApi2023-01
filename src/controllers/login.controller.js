@@ -42,11 +42,11 @@ const login = async (req, res) => {
 }
 
 const verificar = async (req, res) => {
-    const { token } = req.body;
 
-    const existo = jwt.verificarToken(token);
+    console.log(req.headers.xtoken);
+
     res.json({
-        ok: existo
+        ok: true
     });
 
 }
