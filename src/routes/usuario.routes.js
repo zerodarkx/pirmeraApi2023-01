@@ -6,6 +6,7 @@ const { agregarUsuario,
     obtenerTodo,
     obtenerUnoSolo } = require('./../controllers/usuario.controller');
 const { tengoToken } = require('./../middlewares/auth');
+const { validadorUsuario } = require('./../validators/usuario.validators');
 
 const router = Router();
 
@@ -13,7 +14,7 @@ router.get('/', tengoToken, obtenerTodo);
 
 router.get('/:id', tengoToken, obtenerUnoSolo);
 
-router.post('/', tengoToken, agregarUsuario);
+router.post('/', [tengoToken, validadorUsuario], agregarUsuario);
 
 router.put('/:id', tengoToken, editarUsuario);
 

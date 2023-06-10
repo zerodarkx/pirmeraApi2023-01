@@ -36,7 +36,7 @@ app.all('*', (req, res) => {
     res.json(
         {
             "ok": false,
-            "msj": "no exito"
+            "msj": "URL no encontrada"
         }
     );
 })
