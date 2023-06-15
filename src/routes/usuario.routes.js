@@ -14,7 +14,7 @@ router.get('/', tengoToken, obtenerTodo);
 
 router.get('/:id', tengoToken, obtenerUnoSolo);
 
-router.post('/', [tengoToken, validadorUsuario], agregarUsuario);
+router.post('/', [validadorUsuario], agregarUsuario);
 
 router.put('/:id', tengoToken, editarUsuario);
 

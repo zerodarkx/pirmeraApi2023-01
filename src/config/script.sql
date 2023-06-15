@@ -16,5 +16,6 @@ CREATE TABLE `programacion_web`.`usuario` (
   `id_usuario` INT NOT NULL,
   `estado` TINYINT NOT NULL,
   `fecha_creacion` DATE NOT NULL,
+  `fecha_termino` DATE NOT NULL,
   `categoria` NVARCHAR(64) NOT NULL,
   PRIMARY KEY (`id_tarea`));

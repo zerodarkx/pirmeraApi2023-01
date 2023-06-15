@@ -1,76 +1,91 @@
 const database = require('./../config/basedatos');
 const { httpError } = require('./../utils/error');
+const { obtenerData } = require('./../middlewares/auth');
 
 
 const obtenerTareas = async (req, res) => {
 
-    const db = await database();
+    try {
+        const db = await database();
 
-    const sql = `
-        SELECT 
-            t.id_tarea,
-            t.titulo,
-            t.descripcion,
-            t.fecha_creacion,
-            t.fecha_termine,
-            CASE t.estado
-                WHEN 1 THEN 'Procesando'
-                ELSE 'Aun me falta'
-            END AS estado,
-            u.id_usuario,
-            CONCAT(u.nombre, ' ', u.apellido)
-        FROM tarea t
-        INNER JOIN usuario u ON u.id_usuario = t.id_usuario
-    `;
+        const sql = `
+            SELECT 
+                t.id_tarea,
+                t.titulo,
+                t.descripcion,
+                t.fecha_creacion,
+                t.fecha_termine,
+                CASE t.estado
+                    WHEN 1 THEN 'Procesando'
+                    ELSE 'Aun me falta'
+                END AS estado,
+                u.id_usuario,
+                CONCAT(u.nombre, ' ', u.apellido)
+            FROM tarea t
+            INNER JOIN usuario u ON u.id_usuario = t.id_usuario
+        `;
 
-    const [rows] = await db.query(sql);
+        const [rows] = await db.query(sql);
 
-    res.json(
-        {
-            "ok": true,
-            data: rows
-        }
-    );
+        res.json(
+            {
+                "ok": true,
+                data: rows
+            }
+        );
+    } catch (error) {
+        httpError(res, "ERROR_GET_TAREA");
+    }
 }
 
 const agregarTarea = async (req, res) => {
 
-    const { titulo, descripcion, estado, fecha_termino, categoria } = req.body;
-    const id_usuario = 1;
+    try {
+        const { titulo, descripcion, estado, fecha_termino, categoria } = req.body;
 
-    const db = await database();
+        const token = req.headers.authorization;
+        const { usuario } = obtenerData(token.split(" ").pop());
 
-    const sql = `
-        INSERT INTO tarea(titulo, descripcion, estado, fecha_creacion, 
-            fecha_termine, categoria, id_usuario)
-        VALUES('${titulo}', '${descripcion}', '${estado}', NOW(), '${fecha_termino}', 
-            ${categoria}, ${id_usuario})
-    `;
+        const id_usuario = usuario.id;
 
-    const [resultado] = await db.query(sql);
+        const db = database();
 
-    if (!resultado.insertId) {
-        return res.json(
+        const sql = `
+            INSERT INTO tarea(titulo, descripcion, estado, fecha_creacion, 
+                fecha_termino, categoria, id_usuario)
+            VALUES('${titulo}', '${descripcion}', '${estado}', NOW(), '${fecha_termino}', 
+                '${categoria}', ${id_usuario})
+        `;
+
+        const [resultado] = await db.query(sql);
+
+        if (!resultado.insertId) {
+            return res.json(
+                {
+                    "ok": false,
+                    "msj": "no creaste nada"
+                }
+            );
+        }
+
+        res.json(
             {
-                "ok": false,
-                "msj": "no creaste nada"
+                "ok": true
             }
         );
+    } catch (error) {
+        return httpError(res, "ERROR_POST_TAREA")
     }
 
-    res.json(
-        {
-            "ok": true
-        }
-    );
 }
 
 const obtenerTarea = async (req, res) => {
-    const { id } = req.params;
+    try {
+        const { id } = req.params;
 
-    const db = await database();
+        const db = await database();
 
-    const sql = `
+        const sql = `
         SELECT
             t.id_tarea,
             t.titutlo,
@@ -88,14 +103,17 @@ const obtenerTarea = async (req, res) => {
         WHERE t.id_tarea = ${id}
     `;
 
-    const [rows] = await db.query(sql);
+        const [rows] = await db.query(sql);
 
-    res.json(
-        {
-            "ok": true,
-            data: rows
-        }
-    );
+        res.json(
+            {
+                "ok": true,
+                data: rows
+            }
+        );
+    } catch (error) {
+        return httpError(res, "ERROR_GET_UN_SOLO_DATO_TAREA")
+    }
 }
 
 const editarTarea = async (req, res) => {

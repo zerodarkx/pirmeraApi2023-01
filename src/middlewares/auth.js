@@ -28,6 +28,20 @@ const tengoToken = (req, res, next) => {
     }
 }
 
+const obtenerData = (token) => {
+    try {
+        const data = jwt.verificarToken(token);
+        if (!data) {
+            return false
+        }
+        return data;
+    } catch (error) {
+        console.log("obtener data try-catch");
+        return false;
+    }
+}
+
 module.exports = {
-    tengoToken
+    tengoToken,
+    obtenerData
 }

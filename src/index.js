@@ -1,37 +1,24 @@
-require('dotenv').config();
+require('dotenv').config();//IMPORTA VARIABLES DE ENTORNO
 
-const express = require('express');
+const express = require('express'); //LLAMO LIBRERIA DE EXPRESS
 
-
-// const basedatos = require('./config/basedatos');
-
-// const conexionprueba = async () => {
-//     const db = await basedatos();
-//     const sql = 'SELECT * FROM usuario';
-//     const [row] = await db.query(sql);
-//     console.log(row);
-// }
-
-// conexionprueba();
-
-const app = express();
+const app = express(); //INSTACIO EXPRESS
 
 //configuracion
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }))
+app.use(express.json()); //PARA QUE EXPRESS LEA JSON DEL BODY
+app.use(express.urlencoded({ extended: false })); //PARA QUE EXPRESS LEA JSON DEL BODY
 
 //rutas
 //llamar a las rutas
-const indexRoutes = require('./routes/index.routes');
 const usuarioRoutes = require('./routes/usuario.routes');
 const loginRoutes = require('./routes/login.routes');
 const tareaRoutes = require('./routes/tarea.routes');
 
-app.use('', indexRoutes);
 app.use('/usuario', usuarioRoutes);
 app.use('/auth', loginRoutes);
 app.use('/tarea', tareaRoutes);
 
+//CUANDO NO EXISTA RUTA ENTRA ACA
 app.all('*', (req, res) => {
     res.json(
         {
@@ -41,6 +28,7 @@ app.all('*', (req, res) => {
     );
 })
 
+//INICIALIZA NUESTRA API
 app.listen(process.env.PORT, () => {
     console.log("servidor iniciado");
 });

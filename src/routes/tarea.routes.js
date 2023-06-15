@@ -4,12 +4,14 @@ const { obtenerTareas,
     obtenerTarea,
     editarTarea,
     eliminarTarea } = require('./../controllers/tarea.controllers');
+const { tengoToken } = require('./../middlewares/auth');
+const { validadorTarea } = require('./../validators/tarea.validators');
 
 const route = Router();
 
 route.get('/', obtenerTareas,);
 
-route.post('/', agregarTarea,);
+route.post('/', [tengoToken, validadorTarea], agregarTarea);
 
 route.get('/:id', obtenerTarea,);
 
