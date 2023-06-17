@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Agregar Usuario</h2>
+        </div>
+    </div>
+    <form action="http://localhost:4000/usuario/agregarUsuario" method="post">
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <label for="">Nombre</label>
+                <input type="text" name="nombre" id="" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="">Apellido</label>
+                <input type="text" name="apellido" id="" class="form-control">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <label for="">Usuario</label>
+                <input type="text" name="user" id="" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label for="">Contraseña</label>
+                <input type="text" name="password" id="" class="form-control">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <label for="">Estado</label>
+                <input type="text" name="activo" id="" class="form-control">
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success w-100">Agregar</button>
+            </div>
+            <div class="col-md-6">
+                <button type="reset" class="btn btn-danger w-100">Limpiar</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,12 +1,24 @@
 require('dotenv').config();//IMPORTA VARIABLES DE ENTORNO
 
 const express = require('express'); //LLAMO LIBRERIA DE EXPRESS
+const exphbs = require('express-handlebars'); // importo libreria de handlbara psra nuestras vistas
+const path = require('path'); //unir rutas sin importar el S.O.
 
 const app = express(); //INSTACIO EXPRESS
 
 //configuracion
 app.use(express.json()); //PARA QUE EXPRESS LEA JSON DEL BODY
 app.use(express.urlencoded({ extended: false })); //PARA QUE EXPRESS LEA JSON DEL BODY
+
+//configuracion para nuestras vistas
+app.set('view engine', '.hbs');
+app.set('views', 'src/views');
+app.engine('.hbs', exphbs.engine({
+    default: 'main',
+    layoutsDir: path.join(app.get('views'),'layouts'),
+    partialsDir: path.join(app.get('views'),'partials'),
+    extname: '.hbs'
+}));
 
 //rutas
 //llamar a las rutas

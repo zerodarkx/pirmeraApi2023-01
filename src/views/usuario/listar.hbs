@@ -1,0 +1,42 @@
+<div class="container">
+    <h1>Listar Usuario</h1>
+
+    <a href="http://localhost:4000/usuario/agregar">Crear Usuario</a>
+
+    <table class="table w-100">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Usuario</th>
+                <th>Password</th>
+                <th>Activo</th>
+                <th>Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data}}
+            <tr>
+                <td>{{{id_usuario}}}</td>
+                <td>{{{nombre}}}</td>
+                <td>{{{apellido}}}</td>
+                <td>{{{user}}}</td>
+                <td>{{{password}}}</td>
+                <td>{{{activo}}}</td>
+                <td>
+                    <a href="http://localhost:4000/usuario/editar/{{{id_usuario}}}"
+                        class="btn btn-warning">
+                        Editar
+                    </a>                    
+                    <a href="http://localhost:4000/usuario/eliminar/{{{id_usuario}}}"
+                        class="btn btn-danger">
+                        Eliminar
+                    </a>
+                    
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>    
+</div>
